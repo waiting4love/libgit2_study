@@ -39,8 +39,17 @@ int main()
 		exit(error);
 	}
 
-	// 怎么得到对比？
+	// 怎么得到对比
+	error = git_remote_fetch(remote, NULL, NULL, NULL);
+	if (error < 0) {
+		const git_error *e = giterr_last();
+		printf("Error %d/%d: %s\n", error, e->klass, e->message);
+		exit(error);
+	}
 
+	// diff
+	
+	git_remote_free(remote);
 	git_repository_free(repo);
 	git_libgit2_shutdown();
 }
